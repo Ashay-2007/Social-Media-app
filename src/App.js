@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
+import {db} from "./firebase";
 
 function App() {
   const [posts, setPosts] = useState([]);
+
+  useEffect(()=>{
+    db.collection('posts').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data()
+      })));
+    })
+  }, []);
 
   return (
     <div className="app">
@@ -12,10 +22,12 @@ function App() {
       </div>
     
       <h1>Hello Developers, Let's build an instagram clone using React!</h1>
-    
-      <Post username="Ashay" caption="Wow it's superb!!" imageUrl="https://images.unsplash.com/photo-1524577292111-146a2d0e85a6?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTJ8fHN0b3JhZ2V8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60"/>
-      <Post username="Jacqueline" caption="Dopeee!!!" imageUrl="https://bit.ly/fcc-relaxing-cat"/>
-      <Post username="Amanaath" caption="This is a fun project.." imageUrl="https://images.unsplash.com/photo-1553413077-190dd305871c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8c3RvcmFnZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60"/>
+
+      {
+        posts.map(({id, post}) => (
+          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+        ))
+      }
 
     </div>
   );
