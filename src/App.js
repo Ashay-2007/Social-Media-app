@@ -161,6 +161,7 @@ function App() {
         </div>
       </Modal>
       
+
       <div className="app__header">
         <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" className="app__headerImage"/>
         
@@ -182,14 +183,18 @@ function App() {
             <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
           ))
         }
+      
+        
       </div>
       
-
       {user?.displayName ? (
-        <ImageUpload username={user.displayName}/>
-      ): (
-        <h3>If you want to upload new posts, please Login or Sign Up if you are a new user</h3>
+          <ImageUpload username={user.displayName}/>
+        ): (
+          <h3>If you want to upload new posts, please Login or Sign Up if you are a new user</h3>
       )}
+
+
+      
     </div>
   );
 }
