@@ -5,6 +5,7 @@ import {db, auth} from "./firebase";
 import { Button, Modal, Input } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ImageUpload from './ImageUpload';
+// import InstagramEmbed from 'react-instagram-embed';
 
 
 function getModalStyle() {
@@ -175,18 +176,19 @@ function App() {
 
             
      
-      <h1>Hello Developers, Let's build an instagram clone using React!</h1>
-
-      {
-        posts.map(({id, post}) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
-        ))
-      }
+      <div className="app__posts">
+        {
+          posts.map(({id, post}) => (
+            <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+          ))
+        }
+      </div>
+      
 
       {user?.displayName ? (
         <ImageUpload username={user.displayName}/>
       ): (
-        <h3>Sorry you need to login to upload</h3>
+        <h3>If you want to upload new posts, please Login or Sign Up if you are a new user</h3>
       )}
     </div>
   );
